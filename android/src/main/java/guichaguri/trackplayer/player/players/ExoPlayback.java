@@ -55,11 +55,11 @@ public class ExoPlayback extends Playback implements EventListener {
 
         int minBuffer = (int)Utils.toMillis(options.getDouble("minBuffer", Utils.toSeconds(DEFAULT_MIN_BUFFER_MS)));
         int maxBuffer = (int)Utils.toMillis(options.getDouble("maxBuffer", Utils.toSeconds(DEFAULT_MAX_BUFFER_MS)));
-        long playBuffer = Utils.toMillis(options.getDouble("playBuffer", Utils.toSeconds(DEFAULT_BUFFER_FOR_PLAYBACK_MS)));
+        int playBuffer = (int)Utils.toMillis(options.getDouble("playBuffer", Utils.toSeconds(DEFAULT_BUFFER_FOR_PLAYBACK_MS)));
         int multiplier = DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS / DEFAULT_BUFFER_FOR_PLAYBACK_MS;
 
         DefaultAllocator allocator = new DefaultAllocator(true, 0x10000);
-        LoadControl control = new DefaultLoadControl(allocator, minBuffer, maxBuffer, playBuffer, playBuffer * multiplier);
+        LoadControl control = new DefaultLoadControl(allocator, minBuffer, maxBuffer, playBuffer, playBuffer * multiplier, -1, true);
 
         player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context), new DefaultTrackSelector(), control);
         player.setAudioStreamType(C.STREAM_TYPE_MUSIC);
@@ -196,7 +196,7 @@ public class ExoPlayback extends Playback implements EventListener {
     }
 
     @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
+    public void onTimelineChanged(Timeline timeline, Object manifest, int i) {
 
     }
 
@@ -240,12 +240,27 @@ public class ExoPlayback extends Playback implements EventListener {
     }
 
     @Override
-    public void onPositionDiscontinuity() {
+    public void onRepeatModeChanged(int i) {
+
+    }
+
+    @Override
+    public void onShuffleModeEnabledChanged(boolean b) {
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity(int i) {
 
     }
 
     @Override
     public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    }
+
+    @Override
+    public void onSeekProcessed() {
 
     }
 
